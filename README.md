@@ -17,6 +17,6 @@ For compatibility with OpenShift Container Platform and the K8s platform-agnosti
 
 ## Example Implementation - Quick Links
 
-See (ubinoop_controller.go)[https://github.com/jsm84/om-env-example/blob/master/ubi-noop-go/pkg/controller/ubinoop/ubinoop_controller.go#L138-L175] for an example go source implementation.
+See [ubinoop_controller.go](https://github.com/jsm84/om-env-example/blob/master/ubi-noop-go/pkg/controller/ubinoop/ubinoop_controller.go#L138-L175) for an example go source implementation.
 
-Also see (clusterserviceversion.yaml)[https://github.com/jsm84/om-env-example/blob/master/ubi-noop-go/deploy/olm-catalog/ubi-noop-go/0.0.1/ubi-noop-go.v0.0.1.clusterserviceversion.yaml#L87-L88] for an example of setting these environment variables in the operator metadata.
+Also see [clusterserviceversion.yaml](https://github.com/jsm84/om-env-example/blob/master/ubi-noop-go/deploy/olm-catalog/ubi-noop-go/0.0.1/ubi-noop-go.v0.0.1.clusterserviceversion.yaml#L87-L88) for an example of setting these environment variables in the operator metadata.
