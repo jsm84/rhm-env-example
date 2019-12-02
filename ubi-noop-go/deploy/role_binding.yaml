@@ -1,0 +1,11 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ubi-noop-go
+subjects:
+- kind: ServiceAccount
+  name: ubi-noop-go
+roleRef:
+  kind: Role
+  name: ubi-noop-go
+  apiGroup: rbac.authorization.k8s.io

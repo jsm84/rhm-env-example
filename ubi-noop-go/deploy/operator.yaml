@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubi-noop-go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ubi-noop-go
+  template:
+    metadata:
+      labels:
+        name: ubi-noop-go
+    spec:
+      serviceAccountName: ubi-noop-go
+      containers:
+        - name: ubi-noop-go
+          # Replace this with the built image name
+          image: quay.io/jmanning/ubi-noop-go:v0.0.1
+          command:
+          - ubi-noop-go
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "ubi-noop-go"
+            - name: RELATED_IMAGE_UBI_MINIMAL
+              value: "registry.access.redhat.com/ubi8/ubi-minimal"

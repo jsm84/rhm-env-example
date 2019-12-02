@@ -1,0 +1,7 @@
+apiVersion: noop.example.com/v1alpha1
+kind: UBINoOp
+metadata:
+  name: example-ubinoop
+spec:
+  # Add fields here
+  size: 3

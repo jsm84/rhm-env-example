@@ -1,0 +1,174 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: |-
+      [
+        {
+          "apiVersion": "noop.example.com/v1alpha1",
+          "kind": "UBINoOp",
+          "metadata": {
+            "name": "example-ubinoop"
+          },
+          "spec": {
+            "size": 3
+          }
+        }
+      ]
+    capabilities: Basic Install
+    categories: Developer Tools
+    certified: "false"
+    createdAt: 2019-11-30-2300EDT
+    containerImage: quay.io/jmanning/ubi-noop-go:v0.0.1
+
+    description: An example operator that creates a desired number of UBI pods which do nothing
+    repository: github.com/jsm84/om-env-example
+    support: Red Hat 
+  name: ubi-noop-go.v0.0.1
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - kind: UBINoOp
+      name: ubinoops.noop.example.com
+      version: v1alpha1
+      description: A set of Red Hat Universal Base Image (UBI) pods that do nothing
+      displayName: UBINoOp
+  description: |-
+    ### Example Use Only
+    This is a simple operator to be used as a development example only. It deploys the desired number of pods, which each sleep for 1 hour (hence no-op).
+
+    To test, create a Custom Resource of `kind: UBINoOp` with `spec.size` set to the desired number of pods.
+
+    The pods' image can be customized by setting the `RELATED_IMAGE_UBI_MINIMAL` environment variable, which should contain the full path to the desired image/tag.
+
+    This operator sets owner references on all pods for garbage collection, and also updates the CR status with a simple boolean value upon successful deployment (`status.deployed`).
+
+    To see the example code and associated OLM metadata bundle, go to https://github.com/jsm84/om-env-example.
+
+    ### Known bugs and lacking feature examples
+
+    See above for the "academic use" disclaimer, but the operator currently only handles scale-out (increase number of pods) but not scale-in (terminating excess pods if `cr.spec.size` is set to a lesser number of pods).
+    Expect inverse scaling in v0.0.2.
+  displayName: UBI NoOp Operator - Go Example
+  icon:
+  - base64data: PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjEuMiAxMDQuMDUiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojYTMwMDAwO30uY2xzLTJ7ZmlsbDojZWM3YTA4O30uY2xzLTN7ZmlsbDojMDA4OGNlO30uY2xzLTR7ZmlsbDojM2Y5YzM1O30uY2xzLTV7ZmlsbDojYzAwO30uY2xzLTZ7ZmlsbDojZjBhYjAwO30uY2xzLTd7ZmlsbDojMDBiOWU0O30uY2xzLTh7ZmlsbDojOTJkNDAwO308L3N0eWxlPjwvZGVmcz48dGl0bGU+TmV3UkhETG9nbzwvdGl0bGU+PHBhdGggZD0iTTI2NC45MSwzOS40OGMwLDUuMzgsMy4yNCw4LDkuMTQsOGEyNC4xNCwyNC4xNCwwLDAsMCw1LjM4LS43NlY0MC40OEExMS4yNiwxMS4yNiwwLDAsMSwyNzYsNDFjLTIuNDIsMC0zLjMzLS43Ni0zLjMzLTNWMjguMzloNy4wNVYyMmgtNy4wNVYxMy44M2wtNy43MSwxLjY2VjIyaC01LjA5djYuNDJoNS4wOVptLTI0LC4xNGMwLTEuNjYsMS42Ny0yLjQ3LDQuMTktMi40N2ExOS41NiwxOS41NiwwLDAsMSw0LjU3LjU3VjQxYTkuNzUsOS43NSwwLDAsMS00LjgxLDEuMTljLTIuNDcsMC00LTEtNC0yLjUzbTIuMzUsOGExMS43NiwxMS43NiwwLDAsMCw2Ljk1LTJ2MS41Mmg3LjYyVjMxYzAtNi4xNC00LjE0LTkuNTItMTEtOS41MmEyOCwyOCwwLDAsMC0xMS43NiwyLjc2bDIuNzYsNS42NmEyMC43LDIwLjcsMCwwLDEsNy42Mi0yYzMuMTgsMCw0LjgsMS4yMyw0LjgsMy43NnYxLjIzYTIyLjYxLDIyLjYxLDAsMCwwLTUuNzEtLjcxYy02LjQ3LDAtMTAuMzcsMi43MS0xMC4zNyw3LjU3LDAsNC40MiwzLjUyLDcuOCw5LjEzLDcuOG0tNDEuODMtLjQzaDguMTh2LTEzaDEzLjcxdjEzaDguMTlWMTMuODNoLTguMTl2MTIuOEgyMDkuNjVWMTMuODNoLTguMThabS0zMS4yLTEyLjYxYTYuMzgsNi4zOCwwLDAsMSw2LjYyLTYuMzgsNy44NCw3Ljg0LDAsMCwxLDUuMzMsMnY4LjgxYTcuNDIsNy40MiwwLDAsMS01LjMzLDIsNi40MSw2LjQxLDAsMCwxLTYuNjItNi4zOG0xMiwxMi42MWg3LjYydi0zNWwtNy43MSwxLjY3VjIzLjNhMTMsMTMsMCwxLDAtNi42NiwyNC4xOCwxMS4zMiwxMS4zMiwwLDAsMCw2Ljc1LTIuMTlaTTE0Ny4zOCwyNy44MmE1LjU2LDUuNTYsMCwwLDEsNS4yOCw0SDE0Mi4xNGE1LjI2LDUuMjYsMCwwLDEsNS4yNC00bS0xMyw2Ljc2YzAsNy4zMyw2LDEzLDEzLjcsMTNhMTUuMDksMTUuMDksMCwwLDAsMTAuNTItMy44MWwtNS4wOS00LjUyYTYuODEsNi44MSwwLDAsMS01LjA1LDEuOSw2LjUxLDYuNTEsMCwwLDEtNi4xOC00aDE3Ljk0VjM1LjI5YzAtOC01LjM4LTEzLjc1LTEyLjcxLTEzLjc1YTEyLjkzLDEyLjkzLDAsMCwwLTEzLjEzLDEzTTEyMS4xMSwyMC44MmMyLjcxLDAsNC4yMywxLjcyLDQuMjMsMy43NnMtMS41MiwzLjc2LTQuMjMsMy43NkgxMTNWMjAuODJaTTEwNC44Myw0Ny4xNEgxMTNWMzVoNi4yM2w2LjI4LDEyLjEzaDkuMTRsLTcuMzMtMTMuMzJhMTAuMSwxMC4xLDAsMCwwLDYuMjktOS4zOGMwLTYtNC43Mi0xMC42MS0xMS43Ni0xMC42MWgtMTdaIi8+PHJlY3QgY2xhc3M9ImNscy0xIiB4PSI5Ljg0IiB3aWR0aD0iOS44NCIgaGVpZ2h0PSI5Ljg0Ii8+PHJlY3QgY2xhc3M9ImNscy0yIiB4PSIxOS42NyIgeT0iMTcuMTEiIHdpZHRoPSIxOS42NyIgaGVpZ2h0PSI5Ljg0Ii8+PHJlY3QgY2xhc3M9ImNscy0zIiB4PSI5Ljg0IiB5PSI1MS4zMiIgd2lkdGg9IjE5LjY3IiBoZWlnaHQ9IjkuODQiLz48cmVjdCBjbGFzcz0iY2xzLTQiIHk9IjM0LjIyIiB3aWR0aD0iOS44NCIgaGVpZ2h0PSI5Ljg0Ii8+PHJlY3QgY2xhc3M9ImNscy0xIiB4PSIyNi45NyIgd2lkdGg9IjE5LjY3IiBoZWlnaHQ9IjkuODQiLz48cmVjdCBjbGFzcz0iY2xzLTIiIHg9IjQ2LjY0IiB5PSIxNy4xMSIgd2lkdGg9IjkuODQiIGhlaWdodD0iOS44NCIvPjxyZWN0IGNsYXNzPSJjbHMtMyIgeD0iMzYuOCIgeT0iNTEuMzIiIHdpZHRoPSI5Ljg0IiBoZWlnaHQ9IjkuODQiLz48cmVjdCBjbGFzcz0iY2xzLTQiIHg9IjE3LjEzIiB5PSIzNC4yMiIgd2lkdGg9IjE5LjY3IiBoZWlnaHQ9IjkuODQiLz48cmVjdCBjbGFzcz0iY2xzLTUiIHg9IjQ2LjY0IiB3aWR0aD0iMjkuNTEiIGhlaWdodD0iOS44NCIvPjxyZWN0IGNsYXNzPSJjbHMtNiIgeD0iNTYuNDgiIHk9IjE3LjExIiB3aWR0aD0iMjkuNTEiIGhlaWdodD0iOS44NCIvPjxyZWN0IGNsYXNzPSJjbHMtNyIgeD0iNDYuNjQiIHk9IjUxLjMyIiB3aWR0aD0iMTkuNjciIGhlaWdodD0iOS44NCIvPjxyZWN0IGNsYXNzPSJjbHMtOCIgeD0iMzYuOCIgeT0iMzQuMjIiIHdpZHRoPSIzOS4zNSIgaGVpZ2h0PSI5Ljg0Ii8+PHBhdGggZD0iTTEwNC4zNSw5NS4yNVY2My4zNkgxMTUuNmExOCwxOCwwLDAsMSw2LjY3LDEuMjEsMTYuMywxNi4zLDAsMCwxLDUuMzMsMy4zMkExNS4yMywxNS4yMywwLDAsMSwxMzEuMTQsNzNhMTYsMTYsMCwwLDEsMS4yNyw2LjM4LDE1LjQ2LDE1LjQ2LDAsMCwxLTQuNzgsMTEuMzdBMTYuMTksMTYuMTksMCwwLDEsMTIyLjMsOTRhMTguMjEsMTguMjEsMCwwLDEtNi43LDEuMjFabTExLjM0LTI3LjYxaC02LjU2VjkxaDYuNTZhMTIuMywxMi4zLDAsMCwwLDQuNjUtLjg5LDExLjE1LDExLjE1LDAsMCwwLDMuNzYtMi40NiwxMS45MiwxMS45MiwwLDAsMCwyLjQ4LTMuNjksMTEuNDIsMTEuNDIsMCwwLDAsLjkxLTQuNThBMTEuODMsMTEuODMsMCwwLDAsMTI0LjEsNzFhMTEuMTUsMTEuMTUsMCwwLDAtMy43Ni0yLjQ2QTEyLjMsMTIuMywwLDAsMCwxMTUuNjksNjcuNjRaIi8+PHBhdGggZD0iTTE1Ny42LDkyLjYxYTE0LDE0LDAsMCwxLTksMywxMi4zNSwxMi4zNSwwLDAsMS00Ljc5LS45M0ExMi42NSwxMi42NSwwLDAsMSwxNDAsOTIuMmExMS40OSwxMS40OSwwLDAsMS0yLjU3LTMuODEsMTIuNDcsMTIuNDcsMCwwLDEsMC05LjQ1LDExLjY2LDExLjY2LDAsMCwxLDIuNDYtMy43OCwxMS40MywxMS40MywwLDAsMSwzLjY5LTIuNTMsMTEuMjYsMTEuMjYsMCwwLDEsNC41NS0uOTMsMTAuODIsMTAuODIsMCwwLDEsOCwzLjQ4QTEyLjExLDEyLjExLDAsMCwxLDE1OC40Miw3OWExMywxMywwLDAsMSwuODcsNC43OHYxLjMzSDE0MWE3LjgzLDcuODMsMCwwLDAsNy44Myw2LjY1LDkuNDksOS40OSwwLDAsMCwzLjIzLS41NSw3Ljg2LDcuODYsMCwwLDAsMi42NS0xLjVaTTE0OCw3NS41MmE2LjU2LDYuNTYsMCwwLDAtNC41MywxLjc0QTcuNjIsNy42MiwwLDAsMCwxNDEsODEuNzJoMTMuNzZhOCw4LDAsMCwwLTIuMzktNC40MkE2LjI1LDYuMjUsMCwwLDAsMTQ4LDc1LjUyWiIvPjxwYXRoIGQ9Ik0xNzAuNzIsOTUuMjVsLTEwLTIzLjE5aDVMMTczLDg5LjQybDcuMjQtMTcuMzZoNC44N2wtMTAsMjMuMTlaIi8+PHBhdGggZD0iTTIwNy42Miw5Mi42MWExNCwxNCwwLDAsMS05LDMsMTIuMzUsMTIuMzUsMCwwLDEtNC43OS0uOTNBMTIuNjUsMTIuNjUsMCwwLDEsMTkwLDkyLjJhMTEuNDksMTEuNDksMCwwLDEtMi41Ny0zLjgxLDEyLjQ3LDEyLjQ3LDAsMCwxLDAtOS40NSwxMS42NiwxMS42NiwwLDAsMSwyLjQ2LTMuNzgsMTEuNDMsMTEuNDMsMCwwLDEsMy42OS0yLjUzLDExLjI2LDExLjI2LDAsMCwxLDQuNTUtLjkzLDEwLjcxLDEwLjcxLDAsMCwxLDQuNDQuOTMsMTAuODksMTAuODksMCwwLDEsMy41NiwyLjU1QTEyLjExLDEyLjExLDAsMCwxLDIwOC40NCw3OWExMywxMywwLDAsMSwuODcsNC43OHYxLjMzSDE5MWE3Ljg1LDcuODUsMCwwLDAsNy44NCw2LjY1LDkuNDksOS40OSwwLDAsMCwzLjIzLS41NSw3Ljg2LDcuODYsMCwwLDAsMi42NS0xLjVaTTE5OCw3NS41MmE2LjU2LDYuNTYsMCwwLDAtNC41MywxLjc0QTcuNjIsNy42MiwwLDAsMCwxOTEsODEuNzJIMjA0LjhhOCw4LDAsMCwwLTIuMzktNC40MkE2LjI1LDYuMjUsMCwwLDAsMTk4LDc1LjUyWiIvPjxwYXRoIGQ9Ik0yMTguNzQsNjIuMzZWOTUuMjVoLTQuNTZWNjMuMzZaIi8+PHBhdGggZD0iTTIyMy42MSw4My42M2ExMS44MywxMS44MywwLDAsMSwuOTQtNC43MSwxMS42OCwxMS42OCwwLDAsMSwyLjU3LTMuODMsMTIuMzIsMTIuMzIsMCwwLDEsMTMuMjgtMi41NSwxMS45MywxMS45MywwLDAsMSw3LjMxLDExLjA5LDEyLjEzLDEyLjEzLDAsMCwxLS45Myw0Ljc2QTEyLjE1LDEyLjE1LDAsMCwxLDIzMSw5NC43N2ExMi4wOSwxMi4wOSwwLDAsMS0zLjg1LTIuNTUsMTEuNjgsMTEuNjgsMCwwLDEtMi41Ny0zLjgzQTEyLDEyLDAsMCwxLDIyMy42MSw4My42M1ptMTIuMDcsOC4wN0E3LjEyLDcuMTIsMCwwLDAsMjQxLDg5LjM1YTguNDcsOC40NywwLDAsMCwwLTExLjQxLDcuMzQsNy4zNCwwLDAsMC0xMC43MywwLDcuOSw3LjksMCwwLDAtMi4yMyw1LjY5LDgsOCwwLDAsMCwyLjIxLDUuNzJBNy4xNCw3LjE0LDAsMCwwLDIzNS42OCw5MS43WiIvPjxwYXRoIGQ9Ik0yNTIuNTksMTA0LjY4VjcyLjA2aDQuNTF2Mi4yM2E5LjcxLDkuNzEsMCwwLDEsMy4yMy0xLjkzLDExLjI4LDExLjI4LDAsMCwxLDMuODctLjY2LDExLjM5LDExLjM5LDAsMCwxLDQuNi45MywxMS41NSwxMS41NSwwLDAsMSw2LjIsNi4zMSwxMiwxMiwwLDAsMSwuOTEsNC42OSwxMi4yMSwxMi4yMSwwLDAsMS0uOTEsNC43MiwxMS44NSwxMS44NSwwLDAsMS0yLjQ4LDMuOCwxMS40OCwxMS40OCwwLDAsMS0zLjc2LDIuNTMsMTIsMTIsMCwwLDEtOC4zNi4zNCwxMS4zMiwxMS4zMiwwLDAsMS0zLjI2LTEuNjh2MTEuMzRabTExLTI5YTksOSwwLDAsMC0zLjY0LjczLDcuNzQsNy43NCwwLDAsMC0yLjgzLDJWODguOTJhNy40MSw3LjQxLDAsMCwwLDIuOCwyLDkuMTgsOS4xOCwwLDAsMCwzLjY3LjczLDcuNTMsNy41MywwLDAsMCw1LjU4LTIuMjgsOC4zLDguMywwLDAsMCwwLTExLjQxQTcuNTQsNy41NCwwLDAsMCwyNjMuNjEsNzUuNjZaIi8+PHBhdGggZD0iTTMwMSw5Mi42MWExNCwxNCwwLDAsMS05LDMsMTIuMzUsMTIuMzUsMCwwLDEtOC42NS0zLjQ2LDExLjM3LDExLjM3LDAsMCwxLTIuNTgtMy44MSwxMi41OSwxMi41OSwwLDAsMSwwLTkuNDUsMTIsMTIsMCwwLDEsMi40Ni0zLjc4LDExLjQzLDExLjQzLDAsMCwxLDMuNjktMi41MywxMS4zLDExLjMsMCwwLDEsNC41Ni0uOTMsMTAuNzcsMTAuNzcsMCwwLDEsOCwzLjQ4QTEyLjEzLDEyLjEzLDAsMCwxLDMwMS43OSw3OWExMy4yNSwxMy4yNSwwLDAsMSwuODYsNC43OHYxLjMzSDI4NC4zNGE3LjgzLDcuODMsMCwwLDAsNy44Myw2LjY1LDkuNTEsOS41MSwwLDAsMCwzLjI0LS41NSw3LjkxLDcuOTEsMCwwLDAsMi42NC0xLjVabS05LjYyLTE3LjA5YTYuNTYsNi41NiwwLDAsMC00LjUzLDEuNzQsNy42Nyw3LjY3LDAsMCwwLTIuNDQsNC40NmgxMy43NmE3LjksNy45LDAsMCwwLTIuMzktNC40MkE2LjI1LDYuMjUsMCwwLDAsMjkxLjM1LDc1LjUyWiIvPjxwYXRoIGQ9Ik0zMDcuNTMsOTUuMjVWNzIuMDZoNC41NXYzYTcuMTksNy4xOSwwLDAsMSwyLjY5LTIuNTcsNy42Myw3LjYzLDAsMCwxLDMuNjktLjg5LDcuODgsNy44OCwwLDAsMSwxLjI3LjA5LDUuMDYsNS4wNiwwLDAsMSwxLC4yOFY3NmE5LjEzLDkuMTMsMCwwLDAtMS4zMi0uMzYsNyw3LDAsMCwwLTEuMzctLjE0LDYuMjMsNi4yMywwLDAsMC0zLjU3LDEuMDcsNi45MSw2LjkxLDAsMCwwLTIuNDQsMy4xN1Y5NS4yNVoiLz48L3N2Zz4=
+    mediatype: image/svg+xml
+  install:
+    spec:
+      deployments:
+      - name: ubi-noop-go
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              name: ubi-noop-go
+          strategy: {}
+          template:
+            metadata:
+              labels:
+                name: ubi-noop-go
+            spec:
+              containers:
+              - command:
+                - ubi-noop-go
+                env:
+                - name: WATCH_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.annotations['olm.targetNamespaces']
+                - name: POD_NAME
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.name
+                - name: OPERATOR_NAME
+                  value: ubi-noop-go
+                - name: RELATED_IMAGE_UBI_MINIMAL
+                  value: registry.access.redhat.com/ubi8/ubi-minimal:latest
+                image: quay.io/jmanning/ubi-noop-go:v0.0.1
+                imagePullPolicy: Always
+                name: ubi-noop-go
+                resources: {}
+              serviceAccountName: ubi-noop-go
+      permissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - pods
+          - services
+          - services/finalizers
+          - endpoints
+          - persistentvolumeclaims
+          - events
+          - configmaps
+          - secrets
+          verbs:
+          - '*'
+        - apiGroups:
+          - apps
+          resources:
+          - deployments
+          - daemonsets
+          - replicasets
+          - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - servicemonitors
+          verbs:
+          - get
+          - create
+        - apiGroups:
+          - apps
+          resourceNames:
+          - ubi-noop-go
+          resources:
+          - deployments/finalizers
+          verbs:
+          - update
+        - apiGroups:
+          - ""
+          resources:
+          - pods
+          verbs:
+          - get
+        - apiGroups:
+          - apps
+          resources:
+          - replicasets
+          - deployments
+          verbs:
+          - get
+        - apiGroups:
+          - noop.example.com
+          resources:
+          - '*'
+          verbs:
+          - '*'
+        serviceAccountName: ubi-noop-go
+    strategy: deployment
+  installModes:
+  - supported: true
+    type: OwnNamespace
+  - supported: true
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  links:
+  - name: Red Hat Partner Certification Guide for Red Hat OpenShift and Containers
+    url: https://redhat-connect.gitbook.io/partner-guide-for-red-hat-openshift-and-container/
+  - name: Red Hat Certified Operator Build Guide
+    url: https://redhat-connect.gitbook.io/certified-operator-guide/
+  maintainers:
+  - name: Josh Manning
+    email: jmanning AT redhat DOT com
+  maturity: alpha
+  provider:
+    name: Red Hat
+  version: 0.0.1

@@ -1,0 +1,5 @@
+channels:
+- currentCSV: ubi-noop-go.v0.0.1
+  name: alpha
+defaultChannel: alpha
+packageName: ubi-noop-go
