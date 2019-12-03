@@ -20,7 +20,6 @@ metadata:
     certified: "false"
     createdAt: 2019-11-30-2300EDT
     containerImage: quay.io/jmanning/ubi-noop-go:v0.0.1
-
     description: An example operator that creates a desired number of UBI pods which do nothing
     repository: github.com/jsm84/om-env-example
     support: Red Hat 
