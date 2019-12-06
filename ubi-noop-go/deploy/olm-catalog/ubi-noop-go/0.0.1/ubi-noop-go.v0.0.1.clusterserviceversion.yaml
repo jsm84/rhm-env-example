@@ -166,7 +166,7 @@ spec:
     url: https://redhat-connect.gitbook.io/certified-operator-guide/
   maintainers:
   - name: Josh Manning
-    email: jmanning AT redhat DOT com
+    email: connect@redhat.com
   maturity: alpha
   provider:
     name: Red Hat
