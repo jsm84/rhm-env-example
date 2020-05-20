@@ -126,7 +126,8 @@ func (r *ReconcileUBINoOp) Reconcile(request reconcile.Request) (reconcile.Resul
 	// Update CR Status once deployed
 	if instance.Status.Deployed != true {
 		instance.Status.Deployed = true
-		r.client.Status().Update(context.TODO(), instance)
+		reqLogger.Info("Updating Object Status", "CR.Kind", instance.Kind, "CR.Name", instance.Name)
+		err := r.client.Status().Update(context.TODO(), instance)
 		if err != nil {
 			reqLogger.Error(err, "Failed to update pod deploy status")
 			return reconcile.Result{}, err
